@@ -6,12 +6,12 @@ bot.stream('user', function(stream){
     stream.on('data', function(data){
         //Streaming APIからデータ受信時のイベント処理
         if(!('text' in data)) {
-            console.error("[ERROR] INVARID DATA");
+            //console.error("[ERROR] INVARID DATA");
             return;
         }
         
         var twitterUserId   = data.user.screen_name;
-        var statusId        = data.id;
+        var statusId        = data.id_str;
         var isMention       = (data.in_reply_to_user_id !== null);
         var inputExpression = data.text.replace(/[^0-9+\-*/.\(\)]/g, '');
         
@@ -22,15 +22,11 @@ bot.stream('user', function(stream){
         var params = {
             in_reply_to_status_id : statusId
         };
-        
-        bot.updateStatus(replyString, params, function(err,data){
-            if(err){
-                //tweet消去などのときに例外が発生する模様
-                //特に処理する必要がないと思われる
-                return;
-            }
+       
+        bot.updateStatus(replyString, params, function(data){
+            console.log('[TWEET] '+replyString+' // '+statusId);
         });
     });
 });
 
-console.log("[INFO] READY...");
+console.log('[INFO] dentakuBot.js v0.0.1 READY ');
