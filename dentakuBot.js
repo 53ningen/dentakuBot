@@ -11,20 +11,25 @@ bot.stream('user', function(stream){
         }
         
         var twitterUserId   = data.user.screen_name;
+        var statusId        = data.id;
         var isMention       = (data.in_reply_to_user_id !== null);
         var inputExpression = data.text.replace(/[^0-9+\-*/.\(\)]/g, '');
         
         if(!isMention || twitterUserId === BOT_ID) return;
-        bot.updateStatus(
-            '@'+twitterUserId+' '+inputExpression+' = '+eval(inputExpression), 
-            function(err,data){
-                if(err){
-                    //tweet消去などのときに例外が発生する模様
-                    //特に処理する必要がないと思われる
-                    return;
-                }
-                console.log('[REPLY] @'+twitterUserId+' '+inputExpression+' = '+eval(inputExpression)); 
-            });
+        if(inputExpression == "") return;
+
+        var replyString = '@'+twitterUserId+' '+inputExpression+' = '+eval(inputExpression);
+        var params = {
+            in_reply_to_status_id : statusId
+        };
+        
+        bot.updateStatus(replyString, params, function(err,data){
+            if(err){
+                //tweet消去などのときに例外が発生する模様
+                //特に処理する必要がないと思われる
+                return;
+            }
+        });
     });
 });
 
