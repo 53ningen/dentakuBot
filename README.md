@@ -1,18 +1,16 @@
 #dentakuBot.js
-=========
+
 node.jsからtwitter Streaming APIを叩いて動作する計算twitterBOTです。
 不具合等は@gomi_ningenまでお願いします。
 
-# Install and Getting Started
----------------
+##Install and Getting Started
 1. Download dentakuBot.js -> $ git clone
 2. By using npm, install package 'twitter' -> $ npm install twitter
 3. Get the twitter API key and set it to settings.js
 4. Run -> $ node dentakuBot.js
 
 
-# 開発メモ
---------------
+##開発メモ
 jsでテストでどうやるの....（調べる）
 
 * ベキ乗計算を^演算子でできるようにする
@@ -28,4 +26,6 @@ pi,π,e,など....
 * 二元連立一次方程式を解く機能
 * 複素数式計算
 * 微分・積分
+
+
 
