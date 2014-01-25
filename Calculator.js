@@ -1,4 +1,3 @@
-
 var Calculator = {
     /* Execute */ 
     run : function(str){ 

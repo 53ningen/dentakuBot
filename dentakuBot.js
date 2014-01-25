@@ -37,5 +37,4 @@ bot.stream('user', function(stream){
         });
     });
 });
-
 console.log('[INFO] dentakuBot.js v'+VERSION+' READY ');
