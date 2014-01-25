@@ -1,5 +1,6 @@
-var twitter = require('twitter');
 var bot     = require('./settings.js');
+var calc    = require('./Calculator.js');
+var VERSION = '0.0.5';
 
 bot.stream('user', function(stream){
     stream.on('data', function(data){
@@ -11,13 +12,11 @@ bot.stream('user', function(stream){
         var twitterUserId   = data.user.screen_name;
         var statusId        = data.id_str;
         var isMention       = (data.in_reply_to_user_id !== null);
-        var inputExpression;
-        inputExpression = data.text;
-        inputExpression = ToLowerCase(inputExpression);
-        inputExpression = inputExpression.replace(/[^0-9+\-*/.\(\)]/g, '');
-        
-        
+        //Guard: not to react self tweet
         if(!isMention || twitterUserId === bot.BOT_ID) return;
+        
+        //String formatting
+        var inputExpression = calc.run(data.text);
         if(inputExpression == "") return;
         
         var result;
@@ -39,10 +38,4 @@ bot.stream('user', function(stream){
     });
 });
 
-console.log('[INFO] dentakuBot.js v0.0.2 READY ');
-
-ToLowerCase = function(str){
-    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
-        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-    });
-};
+console.log('[INFO] dentakuBot.js v'+VERSION+' READY ');
