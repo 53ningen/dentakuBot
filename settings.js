@@ -9,5 +9,6 @@ var bot = new twitter({
     access_token_secret : 'PLACE YOUR ACCESS_TOKEN_SECRET'
 });
 
+var bot.BOT_ID = 'PLACE YOU BOT_ID';
 //module.exports
 module.exports = bot;
