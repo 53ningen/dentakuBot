@@ -11,7 +11,10 @@ bot.stream('user', function(stream){
         var twitterUserId   = data.user.screen_name;
         var statusId        = data.id_str;
         var isMention       = (data.in_reply_to_user_id !== null);
-        var inputExpression = data.text.replace(/[^0-9+\-*/.\(\)]/g, '');
+        var inputExpression;
+        inputExpression = data.text;
+        inputExpression = ToLowerCase(inputExpression);
+        inputExpression = inputExpression.replace(/[^0-9+\-*/.\(\)]/g, '');
         
         
         if(!isMention || twitterUserId === bot.BOT_ID) return;
@@ -37,3 +40,9 @@ bot.stream('user', function(stream){
 });
 
 console.log('[INFO] dentakuBot.js v0.0.2 READY ');
+
+ToLowerCase = function(str){
+    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+};
