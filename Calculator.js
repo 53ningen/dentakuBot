@@ -8,17 +8,29 @@ var Calculator = {
     },
 
     /* Parse Function */
-    toSingleByteChars : function(str){
-    str = str.replace(/＋/,'+');
-    str = str.replace(/－/,'-');
-    str = str.replace(/÷/,'/');
-    str = str.replace(/×/,'*');
-    str = str.replace(/＊/,'*');
-    str = str.replace(/＝/,'=');
-    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
-        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);   
-        });                                                    
+    toSingleByteChars: function(str){
+        var temp = str;
+        temp =  temp.replace(/[＋|－|×|÷|＝|＊|／|（|）]/g,function(s){
+            switch (s){
+                case "＋": return "+";
+                case "－": return "-";
+                case "×": return "*";
+                case "÷": return "/";
+                case "＝": return "=";
+                case "＊": return "*";
+                case "／": return "/";
+                case "）": return ")";
+                case "（": return "(";
+ 
+                default : break;
+            }
+        });
+        temp = temp.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+           return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);   
+        });
+        return temp;
     },
+
     removeUnevaluableChars : function(str){
         return str.replace(/[^0-9+\-*/.\(\)]/g, '');
     }
